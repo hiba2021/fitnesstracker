@@ -1,0 +1,27 @@
+
+<section class="new-training" fxLayout fxLayoutAlign="center">
+<!-- wrapping the entire mat card in a form -->
+  <form (ngSubmit)="onStartTraining(f)" #f="ngForm"> 
+
+    <mat-card fxFlex="400px" fxFlex.xs="100%" >
+      <mat-card-title fxLayoutAlign="center">Time to start a workout</mat-card-title>
+          <mat-card-content fxLayoutAlign="center">
+              <mat-form-field  *ngIf="!(isLoading$ | async) && (exercises$ | async)">
+                  <mat-select placeholder="Choose Exercise" ngModel name="exercise" required>
+                    <mat-option  *ngFor="let exercise of (exercises$ |async) " [value]="exercise.id" >
+                      {{exercise.name}}         
+                  </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-spinner *ngIf="isLoading$ |async"></mat-spinner>
+          </mat-card-content>
+            <mat-card-actions *ngIf="!(isLoading$ | async)" fxLayoutAlign="center">
+                <button *ngIf="exercises$ | async" type="submit" mat-button [disabled]="f.invalid">Start</button>
+                <button  *ngIf="!(exercises$ |async)" type="button" mat-button (click)="fetchExercises()">Fetch Again</button>
+              <!-- this is a normal button which always needs to be enabled, adding a click listener to trigger fetch method again, so make e new method in coponent class -->
+              </mat-card-actions>
+    </mat-card>
+
+  </form>
+
+</section>

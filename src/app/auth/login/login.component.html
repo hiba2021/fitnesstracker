@@ -1,0 +1,75 @@
+<!-- 
+<section>
+    <form class="example-form" fxLayout="column" fxLayoutAlign="center center"  fxLayoutGap="10px" #f="ngForm"   (ngSubmit)="onSubmit()" >
+    
+        <mat-form-field  >
+            <input 
+            matInput 
+            type="email"  
+            placeholder="Your Email"
+            ngModel 
+            name="email"
+            email
+            required
+            formControlname="email"
+            #emailInput="ngModel"> 
+            <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error>
+            <mat-error *ngIf="emailInput.hasError('required')">Field must not be empty</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field hintLabel="Should be atleast 6 characters long">
+            <input 
+            matInput 
+            type="password"  
+            placeholder="Your Password" 
+            ngModel
+            name="password"
+            required
+            minlength="6"
+            formControlname="password"
+            #pwInput="ngModel"> 
+            <mat-error >Has to be atleast 6 characters long</mat-error>
+            <mat-hint align="end" >{{pwInput.value?.length}}/6</mat-hint>
+        </mat-form-field>
+
+ 
+        <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid">Submit</button>
+    
+    
+    
+    </form>
+    </section>
+     -->
+    
+     
+
+     <section>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px"
+         [formGroup]="loginForm" 
+          (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input
+              type="email"
+              matInput
+              placeholder="Your email address"
+              formControlName="email">
+            <mat-hint>Please enter a valid email.</mat-hint>
+            <mat-error>Invalid or missing email.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="password"
+              matInput
+              placeholder="Your password"
+              formControlName="password">
+            <mat-hint>Please enter your password.</mat-hint>
+            <mat-error>Missing password.</mat-error>
+          </mat-form-field>
+          <button *ngIf="!(isLoading$ |async)" type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Submit</button>
+          <a routerLink="/signup"> New User? Please register!</a>
+          <mat-spinner *ngIf="isLoading$ | async "></mat-spinner>
+        </form>
+      </section>

@@ -1,0 +1,59 @@
+<div fxLayoutAlign="center center">
+    <!-- giving a width of 40 % -->
+    <mat-form-field fxFlex="40%">
+        <input matInput type="text"  placeholder="Filter" (keyup)="doFilter($event)">
+    </mat-form-field>
+</div>
+
+<!-- connect mat-table by property binding of datasource to a property named "dataSource"
+which we have to create. -->
+<!-- Adding the matSort directive, to make the table sortable -->
+<mat-table [dataSource]="dataSource" matSort>
+
+    <!-- using ng container to group things in angular -->
+    <!-- Add a directive matColumnDef to ng container,
+    for material column definition,to give each colimn an identifier, 
+    say for example "date" -->
+    <ng-container matColumnDef="date">
+    <!-- A column has a title cell and a value cell -->
+    <!-- Add a structural directive matHeaderCellDef -->
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.date.toDate()|date }}</mat-cell>
+    </ng-container>
+    <!-- Adding mat-sort-header to make that sortable -->
+    
+    <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+    </ng-container>
+    
+    
+    <ng-container matColumnDef="calories">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.calories |number}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="duration">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Duration (in secs)</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.duration |number}}</mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="state">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.state}}</mat-cell>
+                </ng-container>
+    
+          <!-- Now goin to add a header       -->
+    <!-- with displayed columns, we can control 
+    which of our columns we actually want to show -->
+    <!-- So, we need to configure two things:dataSource(on top) and displayedColumns -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>  
+        
+    </mat-table> 
+
+    <mat-paginator 
+              [pageSize]="1"
+              [pageSizeOptions]="[1,5, 10, 25, 100]"
+              >
+</mat-paginator>
